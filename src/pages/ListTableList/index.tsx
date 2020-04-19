@@ -37,7 +37,7 @@ const handleUpdate = async (fields: FormValueType) => {
   try {
     await updateRule({
       name: fields.name,
-      desc: fields.desc,
+      desc: fields.intro,
       key: fields.key,
     });
     hide();
@@ -80,7 +80,7 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '规则名称',
+      title: '讲师姓名',
       dataIndex: 'name',
       rules: [
         {
@@ -90,45 +90,97 @@ const TableList: React.FC<{}> = () => {
       ],
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
+      title: '讲师简介',
+      dataIndex: 'intro',
+      valueType: 'textarea',
+      rules: [
+        {
+          required: true,
+          message: '规则名称为必填项',
+        },
+      ],
+    },
+    {
+      title: '讲师资历,一句话说明讲师',
+      dataIndex: 'career',
+      valueType: 'textarea',
+      rules: [
+        {
+          required: true,
+          message: '规则名称为必填项',
+        },
+      ],
+    },
+    {
+      title: '头衔',
+      dataIndex: 'level',
+      valueType: 'textarea',
+      rules: [
+        {
+          required: true,
+          message: '规则名称为必填项',
+        },
+      ],
+    },
+    {
+      title: '讲师头像',
+      dataIndex: 'avatar',
       valueType: 'textarea',
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
+      title: '排序',
+      dataIndex: 'sort',
+      valueType: 'number',
       sorter: true,
-      hideInForm: true,
-      renderText: (val: string) => `${val} 万`,
+      rules: [
+        {
+          required: true,
+          message: '规则名称为必填项',
+        },
+      ],
     },
     {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
-      },
-    },
-    {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
-      sorter: true,
+      title: '更新时间',
+      dataIndex: 'gmt_modified',
       valueType: 'dateTime',
-      hideInForm: true,
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！" />;
-        }
-        return defaultRender(item);
-      },
+      sorter: true,
     },
+    // {
+    //   title: '服务调用次数',
+    //   dataIndex: 'callNo',
+    //   sorter: true,
+    //   hideInForm: true,
+    //   renderText: (val: string) => `${val} 万`,
+    // },
+
+    // {
+    //   title: '状态',
+    //   dataIndex: 'status',
+    //   hideInForm: true,
+    //   valueEnum: {
+    //     0: { text: '关闭', status: 'Default' },
+    //     1: { text: '运行中', status: 'Processing' },
+    //     2: { text: '已上线', status: 'Success' },
+    //     3: { text: '异常', status: 'Error' },
+    //   },
+    // },
+    // {
+    //   title: '上次调度时间',
+    //   dataIndex: 'updatedAt',
+    //   sorter: true,
+    //   valueType: 'dateTime',
+    //   hideInForm: true,
+    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
+    //     const status = form.getFieldValue('status');
+    //     if (`${status}` === '0') {
+    //       return false;
+    //     }
+    //     if (`${status}` === '3') {
+    //       return <Input {...rest} placeholder="请输入异常原因！" />;
+    //     }
+    //     return defaultRender(item);
+    //   },
+    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -144,7 +196,7 @@ const TableList: React.FC<{}> = () => {
             配置
           </a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a href="">删除</a>
         </>
       ),
     },
@@ -153,7 +205,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="查询讲师"
         actionRef={actionRef}
         rowKey="key"
         onChange={(_, _filter, _sorter) => {
@@ -196,11 +248,11 @@ const TableList: React.FC<{}> = () => {
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
             <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.key, 0)} 个
             </span>
           </div>
         )}
-        request={(params) => queryRule(params)}
+        request={ (params) =>   queryRule(params)}
         columns={columns}
         rowSelection={{}}
       />

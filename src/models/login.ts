@@ -32,12 +32,14 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      let response = yield call(fakeAccountLogin, payload);
+      console.log(response)
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: response.data,
       });
       // Login successfully
+      response =  response.data
       if (response.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();

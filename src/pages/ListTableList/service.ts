@@ -2,9 +2,12 @@ import request from '@/utils/request';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function queryRule(params?: TableListParams) {
-  return request('/api/rule', {
-    params,
-  });
+  console.log(params)
+  const a = await request.get(
+    `/api/teacher/list/1/10`,
+  )
+  console.log(a);
+  return a;
 }
 
 export async function removeRule(params: { key: number[] }) {

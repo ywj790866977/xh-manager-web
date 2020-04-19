@@ -4,15 +4,15 @@ export interface TableListItem {
   href: string;
   avatar: string;
   name: string;
-  owner: string;
-  desc: string;
-  callNo: number;
-  status: number;
-  updatedAt: Date;
-  createdAt: Date;
-  progress: number;
+  career: string;
+  intro: string;
+  level: number;
+  sort: number;
+  gmt_modified: Date;
+  // createdAt: Date;
+  // progress: number;
 }
-
+  
 export interface TableListPagination {
   total: number;
   pageSize: number;

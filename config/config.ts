@@ -149,6 +149,7 @@ export default defineConfig({
   manifest: {
     basePath: '/',
   },
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  // proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy:proxy['dev'],
   chainWebpack: webpackPlugin,
 });

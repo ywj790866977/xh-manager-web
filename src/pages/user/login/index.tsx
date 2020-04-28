@@ -32,7 +32,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC<LoginProps> = (props) => {
   const { userLogin = {}, submitting } =  props;
   // userLogin 是在mode中定义的
-  console.log("userLogin: ",userLogin)
+  // console.log("userLogin: ",userLogin)
   const { status, type: loginType } = userLogin;
   const [autoLogin, setAutoLogin] = useState(true);
   const [type, setType] = useState<string>('account');

@@ -33,14 +33,15 @@ const Model: LoginModelType = {
   effects: {
     *login({ payload }, { call, put }) {
       let response = yield call(fakeAccountLogin, payload);
-      console.log(response)
+      // console.log(response.data)
       yield put({
         type: 'changeLoginStatus',
-        payload: response.data,
+        payload: response.data.data,
       });
       // Login successfully
-      response =  response.data
-      if (response.status === 'ok') {
+      
+      // console.log(response)
+      if (response.data.data.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -76,7 +77,7 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      console.log(state,payload)
+      // console.log(state,payload)
       setAuthority(payload.currentAuthority);
       return {
         ...state,
